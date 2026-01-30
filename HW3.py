@@ -1,12 +1,11 @@
 # Name: Yeonwoo Shim
 # Student ID: 98360289
 # Email: yanoo@umich.edu
-# Who or what you worked with on this homework (including generative AI like ChatGPT):
+# Who or what you worked with on this homework (including generative AI like ChatGPT): ChatGPT
 # If you worked with generative AI also add a statement for how you used it.
-# e.g.:
-# Asked ChatGPT hints for debugging and suggesting the general structure of the code
-# Did your use of GenAI on this assignment align with your goals and guidelines in 
-#    your Gen AI contract? If not, why?
+    # I used ChatGPT for debugging help, to ask questions when I was stuck or unsure about what to do next, and to better understand how to use GitHub and terminal commands.
+# Did your use of GenAI on this assignment align with your goals and guidelines in your Gen AI contract? If not, why?
+    # Yes, my use of generative AI followed my GenAI contract. I used it as a learning tool to better understand concepts and debugging rather than to replace my own work.
 
 import random
 import io
@@ -14,57 +13,21 @@ from contextlib import redirect_stdout
 
 
 class CouponDispenser:
-    """
-    CouponDispenser manages a box of coupon cards and assigns one coupon
-    to each unique name entered by the user during a session.
-
-    Required attributes (initialized in __init__):
-      - coupon_cards: list[str]              # all possible coupon texts
-      - customer_roster: list[str]             # names in order of assignment
-      - issued_indices: list[int]           # indices into coupon_cards aligned to customer_roster
-
-    """
 
     def __init__(self, coupon_cards):
-        """
-        Initialize a new CouponDispenser object.
-
-        Args:
-            coupon_cards (list[str]): list of possible coupons users can receive.
-        """
-        # TODO: Implement per instructions
+       
         self.coupon_cards = coupon_cards
         self.customer_roster = []
         self.issued_indices = []
 
     def __str__(self):
-        """
-        Return a single string with all coupons in coupon_cards joined by pipes ('|').
-        If coupon_cards is empty, return an empty string "".
-
-        Returns:
-            str
-        """
-        # TODO: Implement per instructions
+        
         if not self.coupon_cards:
             return ""
         return "|".join(self.coupon_cards)
 
     def issue_coupon(self, name):
-        """
-        Assign name with a random coupon. If name is already assigned a coupon, return it.
-        If the list coupon_cards is empty, return:
-        "The box is empty."
-
-        Important: Do not use dictionaries in this method.
-
-        Args:
-            name (str): customer name (trimmed, non-empty)
-
-        Returns:
-            str: message as described above
-        """
-        # TODO: Implement per instructions
+        
         if not self.coupon_cards:
             return "The box is empty."
         
@@ -78,25 +41,11 @@ class CouponDispenser:
         return self.coupon_cards[rand_index]
 
     def distribute_session(self):
-        """
-        Run the "coupon dispenser" session.
-
-        The program will loop asking you to enter a customer name (or names), show, or exit.  
-        - If you type exit (exact spelling) the program will print "Goodbye!" and stop.  
-        - If you enter one or more customer names (separated by commas).
-           * A coupon will be picked at random from a list of coupons for each name 
-           if that name doesn't already have an assigned coupon. 
-        - If you type show (exact spelling) it will display a string with each customer's name and coupon.
-
-        See the instructions for more details.
-
-        Reminder: Use lists only (no dictionaries).
-        """
-        # TODO: Implement per instructions 
+        
         round_num = 1
         while True:
             user_input = input(
-                f"Round {round_num} - Enter a name (or a comma-separated list), or type 'show' or exit': "
+                f"Round {round_num} - Enter a name (or a comma-separated list), or type 'show' or 'exit': "
             )
 
             if user_input == "exit":
@@ -116,32 +65,21 @@ class CouponDispenser:
                 print(result)
 
     def tally_distribution(self):
-        """
-        Extra credit:
-        Print coupon distribution counts (NO sorting) using ONLY lists.
-
-          - If issued_indices is empty:
-              * print("Empty")
-              * return
-          - Otherwise:
-              * For each coupon in coupon_cards (in original order), print:
-                    "<coupon> distribution count: <count>."
-
-        Returns:
-            None
-        """
-        # TODO: Implement per instructions
-        pass
+        
+        if not self.issued_indices:
+            print("Empty")
+            return
+        
+        for i in range(len(self.coupon_cards)):
+            count = 0
+            for idx in self.issued_indices:
+                if idx == i:
+                    count += 1
+            print(f"{self.coupon_cards[i]} distribution count: {count}.")
 
 
 def main():
-    """
-    Driver function:
-      - Define the coupon_cards list (example coupons below)
-      - Create a CouponDispenser
-      - Start the interaction via distribute_session()
-      - After exit, call tally_distribution() to print the distribution in the terminal
-    """
+    
     coupon_cards = [
         "10% off",
         "Free small coffee",
@@ -150,10 +88,9 @@ def main():
     ]
 
     # Uncomment the lines below as you implement each function.
-    # box = CouponDispenser(coupon_cards)
-    # box.distribute_session()
-    # box.tally_distribution()
-    pass
+    box = CouponDispenser(coupon_cards)
+    box.distribute_session()
+    box.tally_distribution()
 
 
 # -----------------------
@@ -161,11 +98,7 @@ def main():
 # -----------------------
 
 def _capture_session_output(box, inputs):
-    """
-    Helper to simulate interactive input/print for distribute_session().
-    - `inputs` is a list of strings that will be returned by input() in order.
-    - This function returns the captured stdout as a string.
-    """
+    
     stream = io.StringIO()
     it = iter(inputs)
 
@@ -188,11 +121,7 @@ def _capture_session_output(box, inputs):
 
 
 def test():
-    """
-    Comprehensive test suite that checks each function with 3–4 cases.
-    These tests use simple asserts and captured output. They assume
-    correct implementations of the methods per the spec.
-    """
+    
     total, passed = 0, 0
 
     def check(condition, msg):
